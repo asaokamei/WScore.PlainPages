@@ -1,0 +1,20 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+div.header {
+    color: #1d1c63;
+    font-weight: bold;
+    background-color: #c9e1ff;
+    margin: 0;
+    padding: 1rem;
+}
+div.contents {
+    margin: 1rem;
+}
+div.footer {
+    color: #722122;
+    font-weight: bold;
+    margin: 0;
+    padding: 1rem;
+}
