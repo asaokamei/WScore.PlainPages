@@ -1,0 +1,19 @@
+{
+    "name": "wscore/plain-pages",
+    "description": "a simple class for templating a plain php file",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Asao Kamei",
+            "email": "asao.kamei@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "WScore\\PlainPages\\": "src/"
+        }
+    }
+}
