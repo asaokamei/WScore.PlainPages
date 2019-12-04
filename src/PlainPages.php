@@ -60,9 +60,19 @@ class PlainPages
         ob_end_clean();
     }
 
+    public function has($name): bool
+    {
+        return isset($this->sectionContents[$name]);
+    }
+
     public function get($name): string
     {
         return $this->sectionContents[$name] ?? '';
+    }
+
+    public function set($name, $contents)
+    {
+        $this->sectionContents[$name] = $contents;
     }
 
     public function emit()
