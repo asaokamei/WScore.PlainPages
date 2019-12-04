@@ -7,11 +7,6 @@ $page = PlainPages::self();
 $page->extend(__DIR__ . '/layout.php');
 
 ?>
-
----------------------------------
-layout for pages side menu.
----------------------------------
-
 <?php $page->section('contents'); ?>
 <table class="contents">
     <tr>
@@ -19,7 +14,7 @@ layout for pages side menu.
             <?= $page->get('side'); ?>
             <br>
             this is the left side of this layout. please add sub-menu here...</td>
-        <td><?= $page->get('main'); ?></td>
+        <td><?= $page->get('contents'); ?></td>
     </tr>
 </table>
 <?php $page->end(); ?>

@@ -16,7 +16,12 @@ class PlainPages
     /**
      * @var string|null;
      */
-    private $currentSectionName = null;
+    private $sectionName = null;
+
+    /**
+     * @var bool
+     */
+    private $isStarted = false;
 
     /**
      * @var string|null;
@@ -25,7 +30,7 @@ class PlainPages
 
     public function __construct()
     {
-        ob_start();
+        $this->section('contents');
     }
 
     public static function self(): PlainPages
@@ -44,12 +49,14 @@ class PlainPages
     public function section(string $name)
     {
         ob_start();
-        $this->currentSectionName = $name;
+        $this->isStarted = true;
+        $this->sectionName = $name;
     }
 
     public function end()
     {
-        $this->sectionContents[$this->currentSectionName] = ob_get_contents();
+        $this->sectionContents[$this->sectionName] = ob_get_contents();
+        $this->isStarted = false;
         ob_end_clean();
     }
 
@@ -66,9 +73,9 @@ class PlainPages
             /** @noinspection PhpIncludeInspection */
             include $filename;
         }
-        if ($this->currentSectionName) {
+        if ($this->sectionName) {
             ob_end_clean();
-            echo $this->sectionContents[$this->currentSectionName] ?? '';
+            echo $this->sectionContents[$this->sectionName] ?? '';
         } else {
             ob_end_flush();
         }
@@ -76,6 +83,9 @@ class PlainPages
 
     public function __destruct()
     {
+        if ($this->isStarted) {
+            $this->end();
+        }
         $this->emit();
     }
 }

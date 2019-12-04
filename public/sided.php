@@ -21,7 +21,7 @@ right-side menu.
 main contents.
 ---------------------------------
 
-<?php $page->section('main'); ?>
+<?php $page->section('contents'); ?>
 <h1>This is main content</h1>
 <p>for nested extended templates.</p>
 <?php $page->end(); ?>
