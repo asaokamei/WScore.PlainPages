@@ -6,6 +6,8 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 $page = PlainPages::self();
 $page->extend(__DIR__ . '/layout.php');
 
+$page->set('sub-title', 'nested template library for raw PHP. ');
+
 ?>
 <?php $page->section('contents'); ?>
 <table class="contents">
@@ -35,7 +37,7 @@ some style for side menus.
     }
     table.contents td.side {
         width: 30%;
-        border: 1px solid #eeeeee;
+        border: 1px solid #e0e0e0;
         background-color: #f8f8f8;
     }
 </style>

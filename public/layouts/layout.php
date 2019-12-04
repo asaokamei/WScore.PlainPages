@@ -12,18 +12,18 @@ $page = PlainPages::self();
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>sample for PlainPages library</title>
+    <title>PlainPages Samples</title>
     <link rel="stylesheet" href="/demo.css">
     <?= $page->get('html-head'); ?>
 </head>
 <body>
 <div class="header">
-    <a href="/">PlainPages sample pages.</a>
+    <a href="/">PlainPages Samples</a><br>
+    <p><?= $page->get('sub-title', 'for raw PHP with low maintenance web sites'); ?></p>
 </div>
 <div class="contents">
     <?= $page->get('contents'); ?>
 </div>
-<hr>
 <div class="footer">
     Wow, it does work...
 </div>

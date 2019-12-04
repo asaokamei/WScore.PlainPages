@@ -8,7 +8,6 @@ $page = PlainPages::self();
 $page->extend(__DIR__ . '/layouts/layout.php');
 ?>
 <h1>Welcome to PlainPages!</h1>
-<p>for raw php with low maintenance web sites. </p>
 
 <h2>Nested Template</h2>
 <ul>
