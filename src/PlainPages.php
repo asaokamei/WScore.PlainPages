@@ -65,9 +65,9 @@ class PlainPages
         return isset($this->sectionContents[$name]);
     }
 
-    public function get($name): string
+    public function get($name, $default = ''): string
     {
-        return $this->sectionContents[$name] ?? '';
+        return $this->sectionContents[$name] ?? $default;
     }
 
     public function set($name, $contents)
