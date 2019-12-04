@@ -28,15 +28,15 @@ class PlainPages
      */
     private $extended = null;
 
-    public function __construct()
+    private function __construct()
     {
-        $this->section('contents');
     }
 
     public static function self(): PlainPages
     {
         if (!self::$self) {
             self::$self = new self();
+            self::$self->section('contents');
         }
         return self::$self;
     }
@@ -67,6 +67,9 @@ class PlainPages
 
     public function emit()
     {
+        if ($this->isStarted) {
+            $this->end();
+        }
         while ($this->extended) {
             $filename = $this->extended;
             $this->extended = null;
@@ -83,9 +86,6 @@ class PlainPages
 
     public function __destruct()
     {
-        if ($this->isStarted) {
-            $this->end();
-        }
         $this->emit();
     }
 }

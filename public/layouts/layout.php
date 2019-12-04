@@ -7,7 +7,7 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 $page = PlainPages::self();
 
 ?>
-<?php $page->section('payload'); ?>
+<?php $page->section('contents'); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
