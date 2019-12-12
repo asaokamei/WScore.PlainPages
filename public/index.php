@@ -1,11 +1,7 @@
 <?php
 
-use WScore\PlainPages\PlainPages;
+require_once __DIR__ . '/app/app.php';
 
-require_once __DIR__ . '/../vendor/autoload.php';
-
-$page = PlainPages::self();
-$page->extend(__DIR__ . '/layouts/layout.php');
 ?>
 <h1>Welcome to PlainPages!</h1>
 

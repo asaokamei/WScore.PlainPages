@@ -1,10 +1,8 @@
 <?php
 
-use WScore\PlainPages\PlainPages;
+require_once __DIR__ . '/app/app.php';
 
-require_once __DIR__ . '/../vendor/autoload.php';
-
-$page = PlainPages::self();
+$page = getPlainPages();
 $page->extend(__DIR__ . '/layouts/side.php');
 ?>
 
