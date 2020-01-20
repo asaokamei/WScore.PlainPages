@@ -28,11 +28,22 @@ class PlainPages
      */
     private $extended = null;
 
+    /**
+     * @var callable
+     */
+    private $onSetContent;
+
+    /**
+     * PlainPages constructor.
+     */
     private function __construct()
     {
     }
 
-    public static function self(): PlainPages
+    /**
+     * @return PlainPages
+     */
+    public static function self()
     {
         if (!self::$self) {
             self::$self = new self();
@@ -41,40 +52,69 @@ class PlainPages
         return self::$self;
     }
 
-    public function extend(string $filename)
+    /**
+     * @param string $filename
+     */
+    public function extend($filename)
     {
         $this->extended = $filename;
     }
 
-    public function section(string $name)
+    /**
+     * @param string $name
+     */
+    public function section($name)
     {
         ob_start();
         $this->isStarted = true;
         $this->sectionName = $name;
     }
 
+    /**
+     *
+     */
     public function end()
     {
-        $this->sectionContents[$this->sectionName] = ob_get_contents();
+        $this->set($this->sectionName, ob_get_contents());
         $this->isStarted = false;
         ob_end_clean();
     }
 
-    public function has($name): bool
+    /**
+     * @param $name
+     * @return bool
+     */
+    public function has($name)
     {
         return isset($this->sectionContents[$name]);
     }
 
-    public function get($name, $default = ''): string
+    /**
+     * @param $name
+     * @param string $default
+     * @return string
+     */
+    public function get($name, $default = '')
     {
-        return $this->sectionContents[$name] ?? $default;
+        return array_key_exists($name, $this->sectionContents) ? $this->sectionContents[$name] : $default;
     }
 
+    /**
+     * @param string $name
+     * @param string $contents
+     */
     public function set($name, $contents)
     {
+        if ($this->onSetContent) {
+            $onSet = $this->onSetContent;
+            $contents = $onSet($name, $contents);
+        }
         $this->sectionContents[$name] = $contents;
     }
 
+    /**
+     *
+     */
     public function emit()
     {
         if ($this->isStarted) {
@@ -88,14 +128,25 @@ class PlainPages
         }
         if ($this->sectionName) {
             ob_end_clean();
-            echo $this->sectionContents[$this->sectionName] ?? '';
+            echo $this->get($this->sectionName);
         } else {
             ob_end_flush();
         }
     }
 
+    /**
+     *
+     */
     public function __destruct()
     {
         $this->emit();
+    }
+
+    /**
+     * @param callable $converter
+     */
+    public function onSetContent($converter)
+    {
+        $this->onSetContent = $converter;
     }
 }
