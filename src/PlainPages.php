@@ -42,7 +42,7 @@ class PlainPages
      * PlainPages constructor.
      * @param string|null $template_dir
      */
-    private function __construct($template_dir = null)
+    public function __construct($template_dir = null)
     {
         $this->template_dir = $template_dir;
     }
@@ -138,7 +138,7 @@ class PlainPages
         if ($this->sectionName) {
             ob_end_clean();
             echo $this->get($this->sectionName);
-        } else {
+        } elseif (ob_get_level() > 0) {
             ob_end_flush();
         }
     }
