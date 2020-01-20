@@ -34,19 +34,28 @@ class PlainPages
     private $onSetContent;
 
     /**
-     * PlainPages constructor.
+     * @var string|null
      */
-    private function __construct()
+    private $template_dir;
+
+    /**
+     * PlainPages constructor.
+     * @param string|null $template_dir
+     */
+    private function __construct($template_dir = null)
     {
+        $this->template_dir = $template_dir;
     }
 
     /**
+     * @param string|null $template_dir
      * @return PlainPages
      */
-    public static function self()
+    public static function self($template_dir = null)
     {
+
         if (!self::$self) {
-            self::$self = new self();
+            self::$self = new self($template_dir);
             self::$self->section('contents');
         }
         return self::$self;
@@ -121,7 +130,7 @@ class PlainPages
             $this->end();
         }
         while ($this->extended) {
-            $filename = $this->extended;
+            $filename = $this->template_dir . DIRECTORY_SEPARATOR . $this->extended;
             $this->extended = null;
             /** @noinspection PhpIncludeInspection */
             include $filename;

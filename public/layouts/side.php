@@ -4,7 +4,7 @@ use WScore\PlainPages\PlainPages;
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 $page = PlainPages::self();
-$page->extend(__DIR__ . '/layout.php');
+$page->extend('/layouts/layout.php');
 
 $page->set('sub-title', 'nested template library for raw PHP. ');
 

@@ -3,7 +3,7 @@
 require_once __DIR__ . '/app/app.php';
 
 $page = getPlainPages();
-$page->extend(__DIR__ . '/layouts/side.php');
+$page->extend('/layouts/side.php');
 ?>
 
 ---------------------------------
