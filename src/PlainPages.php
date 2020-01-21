@@ -99,7 +99,7 @@ class PlainPages
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @param string $default
      * @return string
      */
@@ -138,8 +138,6 @@ class PlainPages
         if ($this->sectionName) {
             ob_end_clean();
             echo $this->get($this->sectionName);
-        } elseif (ob_get_level() > 0) {
-            ob_end_flush();
         }
     }
 
@@ -152,10 +150,23 @@ class PlainPages
     }
 
     /**
+     * hook when set contents. signature:
+     * function(string $name, string $contents): string {}
+     *
      * @param callable $converter
      */
     public function onSetContent($converter)
     {
         $this->onSetContent = $converter;
+    }
+
+    /**
+     * to cleanly destruct this object.
+     */
+    public function close()
+    {
+        $this->isStarted = false;
+        $this->sectionName = null;
+        $this->extended = null;
     }
 }

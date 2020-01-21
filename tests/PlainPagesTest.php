@@ -16,6 +16,12 @@ class PlainPagesTest extends TestCase
         $this->pages = new PlainPages();
     }
 
+    public function tearDown(): void
+    {
+        $this->pages->close();
+        unset($this->pages);
+    }
+
     public function testSet()
     {
         $this->assertFalse($this->pages->has('tests'));
@@ -28,5 +34,19 @@ class PlainPagesTest extends TestCase
     {
         $this->pages->set('tests', 'testOnSet');
         $this->assertEquals('testOnSet', $this->pages->get('tests'));
+        $this->pages->onSetContent(function ($name, $contents) {
+            return "{$name}: $contents";
+        });
+        $this->pages->set('tests', 'testOnSet');
+        $this->assertEquals('tests: testOnSet', $this->pages->get('tests'));
+    }
+
+    public function testSectionAndEnd()
+    {
+        $this->assertEquals('', $this->pages->get('tests'));
+        $this->pages->section('tests');
+        echo 'tested';
+        $this->pages->end();
+        $this->assertEquals('tested', $this->pages->get('tests'));
     }
 }
