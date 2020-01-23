@@ -44,7 +44,7 @@ class PlainPages
      */
     public function __construct($template_dir = null)
     {
-        $this->template_dir = $template_dir;
+        $this->template_dir = rtrim($template_dir, DIRECTORY_SEPARATOR);
     }
 
     /**
@@ -136,10 +136,21 @@ class PlainPages
         }
         $this->section('contents');
         /** @noinspection PhpIncludeInspection */
-        include $this->template_dir . DIRECTORY_SEPARATOR . $filename;
+        include $this->fullFilename($filename);
         $this->end();
 
         return $this->emit();
+    }
+
+    /**
+     * @param string $filename
+     * @return string
+     */
+    private function fullFilename($filename)
+    {
+        return $this->template_dir
+            ? $this->template_dir . DIRECTORY_SEPARATOR . $filename
+            : $filename;
     }
 
     /**
@@ -150,7 +161,7 @@ class PlainPages
     {
         $this->end();
         while ($this->extended) {
-            $filename = $this->template_dir . DIRECTORY_SEPARATOR . $this->extended;
+            $filename = $this->fullFilename($this->extended);
             $this->extended = null;
             /** @noinspection PhpIncludeInspection */
             include $filename;
