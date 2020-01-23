@@ -74,6 +74,7 @@ class PlainPages
      */
     public function section($name)
     {
+        $this->end();
         ob_start();
         $this->isStarted = true;
         $this->sectionName = $name;
@@ -84,9 +85,11 @@ class PlainPages
      */
     public function end()
     {
-        $this->set($this->sectionName, ob_get_contents());
-        $this->isStarted = false;
-        ob_end_clean();
+        if ($this->isStarted) {
+            $this->set($this->sectionName, ob_get_contents());
+            $this->isStarted = false;
+            ob_end_clean();
+        }
     }
 
     /**
@@ -122,13 +125,30 @@ class PlainPages
     }
 
     /**
+     * @param string $filename
+     * @param array $options
+     * @return string
+     */
+    public function render($filename, $options = [])
+    {
+        foreach ($options as $key => $value) {
+            $this->set($key, $value);
+        }
+        $this->section('contents');
+        /** @noinspection PhpIncludeInspection */
+        include $this->template_dir . DIRECTORY_SEPARATOR . $filename;
+        $this->end();
+
+        return $this->emit();
+    }
+
+    /**
      *
+     * @return string
      */
     public function emit()
     {
-        if ($this->isStarted) {
-            $this->end();
-        }
+        $this->end();
         while ($this->extended) {
             $filename = $this->template_dir . DIRECTORY_SEPARATOR . $this->extended;
             $this->extended = null;
@@ -136,9 +156,9 @@ class PlainPages
             include $filename;
         }
         if ($this->sectionName) {
-            ob_end_clean();
-            echo $this->get($this->sectionName);
+            return $this->get($this->sectionName);
         }
+        return '';
     }
 
     /**
@@ -146,7 +166,7 @@ class PlainPages
      */
     public function __destruct()
     {
-        $this->emit();
+        echo $this->emit();
     }
 
     /**
@@ -165,7 +185,7 @@ class PlainPages
      */
     public function close()
     {
-        $this->isStarted = false;
+        $this->end();
         $this->sectionName = null;
         $this->extended = null;
     }
