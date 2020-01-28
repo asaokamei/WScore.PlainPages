@@ -1,11 +1,9 @@
 <?php
-
 use WScore\PlainPages\PlainPages;
-require_once __DIR__ . '/../../vendor/autoload.php';
 
-$page = PlainPages::self();
+/** @var PlainPages $page */
+$page = $this;
 $page->extend('/layouts/layout.php');
-
 $page->set('sub-title', 'nested template library for raw PHP. ');
 
 ?>
@@ -20,11 +18,6 @@ $page->set('sub-title', 'nested template library for raw PHP. ');
     </tr>
 </table>
 <?php $page->end(); ?>
-
----------------------------------
-some style for side menus.
----------------------------------
-
 <?php $page->section('html-head'); ?>
 <style>
     table.contents {

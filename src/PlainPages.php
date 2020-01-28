@@ -46,21 +46,7 @@ class PlainPages
     {
         $this->template_dir = rtrim($template_dir, DIRECTORY_SEPARATOR);
     }
-
-    /**
-     * @param string|null $template_dir
-     * @return PlainPages
-     */
-    public static function self($template_dir = null)
-    {
-
-        if (!self::$self) {
-            self::$self = new self($template_dir);
-            self::$self->section('contents');
-        }
-        return self::$self;
-    }
-
+    
     /**
      * @param string $filename
      */

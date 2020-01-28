@@ -1,8 +1,8 @@
 <?php
+use WScore\PlainPages\PlainPages;
 
-$page = require_once __DIR__ . '/../app/app.php';
-
-$page = getPlainPages();
+/** @var PlainPages $page */
+$page = $this;
 
 ?>
 <?php $page->section('contents'); ?>

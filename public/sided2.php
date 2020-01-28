@@ -1,8 +1,6 @@
 <?php
 
-require_once __DIR__ . '/app/app.php';
-
-$page = getPlainPages();
+$page = require_once __DIR__ . '/app/app.php';
 $page->extend('/layouts/side.php');
 
 ?>

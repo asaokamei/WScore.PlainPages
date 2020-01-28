@@ -37,7 +37,7 @@ A file, `index.php`, may have such code:
 ```php
 <?php
 use WScore\PlainPages\PlainPages;
-$page = PlainPages::self();
+$page = new PlainPages();
 ?>
 <html>
 <body>
@@ -58,7 +58,7 @@ The the contents of the file is stored as `contents` as a default.
 ```php
 <?php
 use WScore\PlainPages\PlainPages;
-$page = PlainPages::self();
+$page = new PlainPages();
 $page->extend(__DIR__ . '/layout.php');
 ?>
 <h1>Plain Pages Here!!</h1>
@@ -69,7 +69,7 @@ In layout file, `layout.php`, get the contents and emit.
 ```php
 <?php
 use WScore\PlainPages\PlainPages;
-$page = PlainPages::self();
+$page = new PlainPages();
 ?>
 <?php $page->section('payload'); ?>
 <html>
@@ -93,7 +93,7 @@ such as 'payload' or 'contents'.
 ```php
 <?php
 use WScore\PlainPages\PlainPages;
-$page = PlainPages::self();
+$page = new PlainPages();
 $page->extend(__DIR__ . '/nested.php');
 ?>
 <h1>Plain Pages Here!!!</h1>
@@ -104,7 +104,7 @@ and nexted layout file, `nested.php`, may look like...
 ```php
 <?php
 use WScore\PlainPages\PlainPages;
-$page = PlainPages::self();
+$page = new PlainPages();
 ?>
 <?php $page->section('contents'); ?>
 <div id="nested">
