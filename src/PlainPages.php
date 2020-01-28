@@ -4,11 +4,6 @@ namespace WScore\PlainPages;
 class PlainPages
 {
     /**
-     * @var PlainPages
-     */
-    private static $self;
-
-    /**
      * @var string[];
      */
     private $sectionContents = [];
@@ -46,7 +41,7 @@ class PlainPages
     {
         $this->template_dir = rtrim($template_dir, DIRECTORY_SEPARATOR);
     }
-    
+
     /**
      * @param string $filename
      */
