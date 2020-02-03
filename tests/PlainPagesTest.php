@@ -18,7 +18,6 @@ class PlainPagesTest extends TestCase
 
     public function tearDown(): void
     {
-        $this->pages->close();
         unset($this->pages);
     }
 
@@ -48,5 +47,6 @@ class PlainPagesTest extends TestCase
         echo 'tested';
         $this->pages->end();
         $this->assertEquals('tested', $this->pages->get('tests'));
+        $this->assertEquals('tested', $this->pages->emit());
     }
 }

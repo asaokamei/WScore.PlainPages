@@ -18,7 +18,6 @@ class RenderTest extends TestCase
 
     public function tearDown(): void
     {
-        $this->pages->close();
         unset($this->pages);
     }
 
