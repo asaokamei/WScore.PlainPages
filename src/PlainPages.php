@@ -4,19 +4,9 @@ namespace WScore\PlainPages;
 class PlainPages
 {
     /**
-     * @var string[];
-     */
-    private $sectionContents = [];
-
-    /**
      * @var string|null;
      */
     private $sectionName = null;
-
-    /**
-     * @var bool
-     */
-    private $isStarted = false;
 
     /**
      * @var string|null;
@@ -34,12 +24,18 @@ class PlainPages
     private $template_dir;
 
     /**
+     * @var Contents
+     */
+    private $contents;
+
+    /**
      * PlainPages constructor.
      * @param string|null $template_dir
      */
     public function __construct($template_dir = null)
     {
         $this->template_dir = rtrim($template_dir, DIRECTORY_SEPARATOR);
+        $this->contents = new Contents();
     }
 
     /**
@@ -55,10 +51,8 @@ class PlainPages
      */
     public function section($name)
     {
-        $this->end();
-        ob_start();
-        $this->isStarted = true;
         $this->sectionName = $name;
+        $this->contents->section($name);
     }
 
     /**
@@ -66,20 +60,16 @@ class PlainPages
      */
     public function end()
     {
-        if ($this->isStarted) {
-            $this->set($this->sectionName, ob_get_contents());
-            $this->isStarted = false;
-            ob_end_clean();
-        }
+        $this->contents->end();
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return bool
      */
     public function has($name)
     {
-        return isset($this->sectionContents[$name]);
+        return $this->contents->has($name);
     }
 
     /**
@@ -89,7 +79,7 @@ class PlainPages
      */
     public function get($name, $default = '')
     {
-        return array_key_exists($name, $this->sectionContents) ? $this->sectionContents[$name] : $default;
+        return $this->contents->get($name, $default);
     }
 
     /**
@@ -102,7 +92,7 @@ class PlainPages
             $onSet = $this->onSetContent;
             $contents = $onSet($name, $contents);
         }
-        $this->sectionContents[$name] = $contents;
+        $this->contents->set($name, $contents);
     }
 
     /**
@@ -147,10 +137,11 @@ class PlainPages
             /** @noinspection PhpIncludeInspection */
             include $filename;
         }
-        if ($this->sectionName) {
-            return $this->get($this->sectionName);
-        }
-        return '';
+        $contents = $this->sectionName
+            ? $this->get($this->sectionName)
+            : '';
+        $this->close();
+        return $contents;
     }
 
     /**
@@ -177,7 +168,7 @@ class PlainPages
      */
     public function close()
     {
-        $this->end();
+        $this->contents->close();
         $this->sectionName = null;
         $this->extended = null;
     }
